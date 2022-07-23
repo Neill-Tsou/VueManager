@@ -13,11 +13,17 @@
                 <el-button type="primary" @click="getList">搜索</el-button>
             </common-form>
         </div>
+        <common-table :tableData="tableData" :tableLabel="tableLabel" :config="config"
+            @changePage="getList(searchForm.keyword)" @edit="editUser" @del="delUser">
+
+        </common-table>
     </div>
 </template>
 
 <script>
 import CommonForm from '@/components/CommonForm.vue'
+import CommonTable from '@/components/CommonTable.vue';
+import { getUser } from '@/api/data'
 
 
 
@@ -76,12 +82,54 @@ export default {
             }],
             searchForm: {
                 keyword: ''
+            },
+            tableData: [],
+            tableLabel: [
+                {
+                    prop: "name",
+                    label: "姓名"
+                },
+                {
+                    prop: "age",
+                    label: "年龄"
+                },
+                {
+                    prop: "sexLabel",
+                    label: "性别"
+                },
+                {
+                    prop: "birth",
+                    label: "出生日期",
+                    width: 200
+                },
+                {
+                    prop: "addr",
+                    label: "地址",
+                    width: 320
+                }
+            ],
+            config: {
+                page: 1,
+                total: 30
             }
         };
     },
     methods: {
         confirm() {
-
+            if (this.operateType === 'edit') {
+                this.$http.post('/user/edit', this.operateForm).then(res => {
+                    console.log(res)
+                    this.isShow = false
+                    this.getList()
+                })
+            }
+            else {
+                this.$http.post('/user/add', this.operateForm).then(res => {
+                    console.log(res)
+                    this.isShow = false
+                    this.getList()
+                })
+            }
         },
         addUser() {
             this.isShow = true,
@@ -95,18 +143,61 @@ export default {
                     sex: ''
                 }
         },
-        getList() {
-
+        getList(name = '') {
+            this.config.loading = true
+            name ? (this.config.page = 1) : ''
+            getUser({
+                page: this.config.page,
+                name
+            }).then(({ data: res }) => {
+                this.tableData = res.list.map(item => {
+                    item.sexLabel = item.sex === 0 ? "女" : "男"
+                    return item
+                })
+                this.config.total = res.count
+                this.config.loading = false
+            })
+        },
+        editUser(row) {
+            this.operateType = 'edit'
+            this.isShow = true
+            this.operateForm = row
+        },
+        delUser(row) {
+            this.$confirm("此操作将永久删除该文件，是否继续？", "提示", {
+                confirmButtonText: "确认",
+                cancelButtonText: "取消",
+                type: "warning"
+            }).then(() => {
+                const id = row.id
+                this.$http.post("/user/del", {
+                    params: { id }
+                }).then(() => {
+                    this.$message({
+                        type: 'success',
+                        message: '删除成功'
+                    })
+                    this.getList()
+                })
+            })
         }
     },
-    components: { CommonForm }
+    created() {
+        this.getList()
+    },
+    components: {
+        CommonForm,
+        CommonTable
+    }
 }
 </script>
 
 <style lang="less" scoped>
 .manage-header {
-    display: flex;
+    display: flex; //这一条样式导致新增按钮尺寸出错，原因是搜索按钮放在common-form盒子里，高度与common-form相同，而新增按钮放在div盒子里
     justify-content: space-between;
     align-content: center;
+    height: 40px; //下面两条样式解决了新增按钮尺寸出错，解决方案是给div盒子设定高度与搜索按钮一致，然后设定下外边距
+    margin-bottom: 22px;
 }
 </style>

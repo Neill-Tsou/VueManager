@@ -12,6 +12,7 @@
         </el-header>
         <!-- Tag -->
         <common-tag></common-tag>
+        <!-- Main -->
         <el-main>
           <router-view></router-view>
         </el-main>

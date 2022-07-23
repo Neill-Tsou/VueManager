@@ -3,7 +3,7 @@ import App from './App.vue'
 import {
   Button, Container, Main, Header, Aside, Menu, Submenu, MenuItem, MenuItemGroup, Dropdown, DropdownMenu, DropdownItem,
   Row, Col, Card, Table, TableColumn, Breadcrumb, BreadcrumbItem, Tag, Form, FormItem, Input, Select, Switch, Option, DatePicker,
-  Dialog
+  Dialog, Pagination, MessageBox, Message
 } from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css';
 import router from '@/router/index.js'
@@ -41,11 +41,31 @@ Vue.use(Switch)
 Vue.use(Option)
 Vue.use(DatePicker)
 Vue.use(Dialog)
+Vue.use(Pagination)
 
 Vue.prototype.$http = http
+Vue.prototype.$confirm = MessageBox.confirm
+Vue.prototype.$message = Message
+
+// 路由卫士
+router.beforeEach((to, from, next) => {
+  store.commit('getToken')
+  const token = store.state.user.token
+  if (!token && to.name !== 'Login') {
+    next({ name: 'Login' })
+  } else if (token && to.name === 'login') {
+    next({ name: 'Home' })
+  }
+  else {
+    next()
+  }
+})
 
 new Vue({
   render: h => h(App),
+  created() {
+    store.commit('addMenu', router)
+  },
   router,
   store
 }).$mount('#app')
