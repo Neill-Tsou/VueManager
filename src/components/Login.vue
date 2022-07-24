@@ -1,5 +1,5 @@
 <template>
-    <el-form :model="form" status-icon="true" :rules="rules" ref="form" label-width="100px" class="login-container">
+    <el-form :model="form" status-icon :rules="rules" ref="form" label-width="100px" class="login-container">
         <h3 class="login_title">系统登录</h3>
         <el-form-item label="用户名" label-width="80px" prop="username" class="username">
             <el-input type="input" v-model="form.username" auto-complete="off" placeholder="请输入账号"></el-input>
@@ -8,22 +8,21 @@
             <el-input type="password" v-model="form.password" auto-complete="off" placeholder="请输入密码"></el-input>
         </el-form-item>
         <el-form-item class="login_submit">
-            <el-button type="primary" @click="login()" class="login_submit">登录</el-button>
+            <el-button type="primary" @click="login" class="login_submit">登录</el-button>
         </el-form-item>
     </el-form>
 </template>
 
 <script>
-import Mock from 'mockjs'
+// import Mock from 'mockjs'
+
 import { getMenu } from '@/api/data'
 
 export default {
-    name: 'Login',
+    name: 'login',
     data() {
         return {
-            form: {
-
-            },
+            form: {},
             rules: {
                 username: [{
                     required: true,
@@ -44,18 +43,24 @@ export default {
         }
     },
     methods: {
+        // 注释掉getMenu，注意res解构赋值了，解除注释后要把res.data写成res
         login() {
-            getMenu(this.form).then(({ data: res }) => {
-                if (res.code === 20000) {
-                    this.$store.commit('clearMenu')
-                    this.$store.commit('setMenu', res.data.menu)
-                    this.$store.commit('setToken', res.data.token)
-                    this.$store.commit('addMenu', this.$router)
-                    this.$router.push({ name: 'Home' })
-                } else {
-                    this.$message.warning(res.data.message)
-                }
-            })
+            //静态路由
+            this.$router.replace('/home').catch(err => { })
+            //动态路由
+            // getMenu(this.form).then(({ data: res }) => {
+            //     if (res.data.code === 20000) {
+            //         this.$store.commit('clearMenu')
+            //         this.$store.commit('setMenu', res.menu)
+            //         this.$store.commit('setToken', res.data.token)
+            //         this.$store.commit('addMenu', this.$router)
+            //         this.$router.push({ name: 'home' })
+            //     } else {
+            //         this.$message.warning(res.data.message)
+            //     }
+            // }
+            // )
+            // 以下不要
             // const token = Mock.random.guid()
             // this.$store.commit('setToken', token)
             // this.$router.push({ name: 'home' })

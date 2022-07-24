@@ -13,24 +13,24 @@ export default {
           menu: [
             {
               path: '/',
-              name: 'Home',
+              name: 'home',
               label: '首页',
               icon: 's-home',
-              url: 'HomePage.vue'
+              url: 'Home/Home'
             },
             {
               path: '/mall',
-              name: 'Mall',
+              name: 'mall',
               label: '商品管理',
               icon: 'video-play',
-              url: 'MallPage.vue'
+              url: 'MallManage/MallManage'
             },
             {
               path: '/user',
-              name: 'User',
+              name: 'user',
               label: '用户管理',
               icon: 'user',
-              url: 'UserPage.vue'
+              url: 'UserManage/UserManage'
             },
             {
               label: '其他',
@@ -38,17 +38,17 @@ export default {
               children: [
                 {
                   path: '/page1',
-                  name: 'Page1',
+                  name: 'page1',
                   label: '页面1',
                   icon: 'setting',
-                  url: 'PageOne.vue'
+                  url: 'other/PageOne'
                 },
                 {
                   path: '/page2',
-                  name: 'Page2',
+                  name: 'page2',
                   label: '页面2',
                   icon: 'setting',
-                  url: 'PageTwo.vue'
+                  url: 'Other/PageTwo'
                 }
               ]
             }
@@ -64,17 +64,17 @@ export default {
           menu: [
             {
               path: '/',
-              name: 'Home',
+              name: 'home',
               label: '首页',
               icon: 's-home',
-              url: 'Home/Home'
+              url: '@/components/HomePage.vue'
             },
             {
               path: '/video',
-              name: 'Video',
+              name: 'video',
               label: '商品管理',
               icon: 'video-play',
-              url: 'VideoManage/VideoManage'
+              url: '@/components/MallPage.vue'
             }
           ],
           token: Mock.Random.guid(),

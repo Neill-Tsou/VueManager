@@ -9,18 +9,20 @@
 import Main from '@/components/Main.vue'
 
 export default {
-  name: 'App',
+  name: 'app',
   component: Main
-  
+
 }
 </script>
 
 <style>
-html, body {
-margin: 0;
-padding: 0;
+html,
+body {
+  margin: 0;
+  padding: 0;
 }
-#app{
+
+#app {
   height: 100vh;
 }
 </style>

@@ -15,41 +15,42 @@ const router = new VueRouter({
     mode: 'history',
     routes: [
         {
+            //静态路由
             path: '/',
             redirect: '/home',
-            name: 'Main',
+            name: 'main',
             component: Main,
             children: [
                 {
                     path: '/home',
-                    name: 'Home',
+                    name: 'home',
                     component: HomePage
                 },
                 {
                     path: '/mall',
-                    name: 'Mall',
+                    name: 'mall',
                     component: MallPage
                 },
                 {
                     path: '/user',
-                    name: 'User',
+                    name: 'user',
                     component: UserPage
                 },
                 {
                     path: '/page1',
-                    name: 'Page1',
+                    name: 'page1',
                     component: PageOne
                 },
                 {
                     path: '/page2',
-                    name: 'Page2',
+                    name: 'page2',
                     component: PageTwo
                 }
             ]
         },
         {
             path: '/login',
-            name: 'Login',
+            name: 'login',
             component: Login,
         }
 

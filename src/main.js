@@ -47,25 +47,26 @@ Vue.prototype.$http = http
 Vue.prototype.$confirm = MessageBox.confirm
 Vue.prototype.$message = Message
 
-// 路由卫士
-router.beforeEach((to, from, next) => {
-  store.commit('getToken')
-  const token = store.state.user.token
-  if (!token && to.name !== 'Login') {
-    next({ name: 'Login' })
-  } else if (token && to.name === 'login') {
-    next({ name: 'Home' })
-  }
-  else {
-    next()
-  }
-})
+// 路由卫士，调试时关闭 token可能有问题
+// router.beforeEach((to, from, next) => {
+//   store.commit('getToken')
+//   const token = store.state.user.token
+//   if (!token && to.name !== 'login') {
+//     next({ name: 'login' })
+//   } else if (token && to.name === 'login') {
+//     next({ name: 'home' })
+//   }
+//   else {
+//     next()
+//   }
+// })
 
 new Vue({
   render: h => h(App),
+  router,
+  store,
+  // 报错：unknown mutation type: clearMenu, setMenu, addMenu，但这里没有错误，先注释了调试
   created() {
     store.commit('addMenu', router)
   },
-  router,
-  store
 }).$mount('#app')
