@@ -1,4 +1,4 @@
-// import router from "@/router"
+import router from "../router/"
 import Cookie from "js-cookie"
 
 export default {
@@ -44,7 +44,7 @@ export default {
             state.menu = []
             Cookie.remove('menu')
         },
-        //Unexpected token u in JSON at position 0，原因是JSON.parse时候解析了undefined，menu还是没拿到
+
         addMenu(state, router) {
             if (!Cookie.get('menu')) {
                 return
@@ -55,19 +55,20 @@ export default {
             menu.forEach(item => {
                 if (item.children) {
                     item.children = item.children.map(item => {
-                        item.component = () => import(`@/components/${item.url}`)
+                        item.component = () => import(`../components/${item.url}`)
                         // console.log(item.component)
                         return item
                     })
                     menuArray.push(...item.children)
                 } else {
-                    item.component = () => import(`@/components/${item.url}`)
+                    item.component = () => import(`../components/${item.url}`)
                     menuArray.push(item)
                 }
 
             });
+            //动态添加路由
             menuArray.forEach(item => {
-                router.addRoutes('Main', item)
+                router.addRoute('main', item)
             })
         }
     }

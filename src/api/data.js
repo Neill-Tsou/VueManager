@@ -2,7 +2,7 @@ import axios from '@/api/axios'
 
 export const getMenu = (param) => {
     return axios.request({
-        url: '/home',
+        url: '/permission/getMenu',
         method: 'post',
         data: param
     })

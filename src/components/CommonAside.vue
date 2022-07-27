@@ -6,7 +6,7 @@
       <i :class="'el-icon-' + item.icon"></i>
       <span slot="title">{{ item.label }}</span>
     </el-menu-item>
-    <!-- :index应为字符串，后面拼接空字符串强制转换''，也可使用toString()方法，已解决 -->
+
     <el-submenu v-for="item in hasChildren" :index="item.path + ''" :key="item.path">
       <template slot="title">
         <i :class="'el-icon-' + item.icon"></i>
@@ -45,47 +45,47 @@ export default {
     return {
       menu: [
         //静态路由
-        {
-          path: '/',
-          name: 'home',
-          label: '首页',
-          icon: 's-home',
-          url: 'Home/Home'
-        },
-        {
-          path: '/mall',
-          name: 'mall',
-          label: '商品管理',
-          icon: 'video-play',
-          url: 'MallManage/MallManage'
-        },
-        {
-          path: '/user',
-          name: 'user',
-          label: '用户管理',
-          icon: 'user',
-          url: 'UserManage/UserManage'
-        },
-        {
-          label: '其他',
-          icon: 'location',
-          children: [
-            {
-              path: '/page1',
-              name: 'page1',
-              label: '页面1',
-              icon: 'setting',
-              url: 'other/PageOne'
-            },
-            {
-              path: '/page2',
-              name: 'page2',
-              label: '页面2',
-              icon: 'setting',
-              url: 'Other/PageTwo'
-            }
-          ]
-        }
+        // {
+        //   path: '/',
+        //   name: 'home',
+        //   label: '首页',
+        //   icon: 's-home',
+        //   url: 'Home/Home'
+        // },
+        // {
+        //   path: '/mall',
+        //   name: 'mall',
+        //   label: '商品管理',
+        //   icon: 'video-play',
+        //   url: 'MallManage/MallManage'
+        // },
+        // {
+        //   path: '/user',
+        //   name: 'user',
+        //   label: '用户管理',
+        //   icon: 'user',
+        //   url: 'UserManage/UserManage'
+        // },
+        // {
+        //   label: '其他',
+        //   icon: 'location',
+        //   children: [
+        //     {
+        //       path: '/page1',
+        //       name: 'page1',
+        //       label: '页面1',
+        //       icon: 'setting',
+        //       url: 'other/PageOne'
+        //     },
+        //     {
+        //       path: '/page2',
+        //       name: 'page2',
+        //       label: '页面2',
+        //       icon: 'setting',
+        //       url: 'Other/PageTwo'
+        //     }
+        //   ]
+        // }
       ]
     };
   },
@@ -104,21 +104,18 @@ export default {
     }
   },
   computed: {
-    //报错的根本原因：asyncMenu咋在这里return了undefined，导致noChildren/hasChildren报错Cannot read properties of undefined (reading 'filter')
-    //检查vuex
     noChildren() {
-      return this.menu.filter(item => !item.children)
+      return this.asyncMenu.filter(item => !item.children)
     },
     hasChildren() {
-      return this.menu.filter(item => item.children)
+      return this.asyncMenu.filter(item => item.children)
     },
     isCollapse() {
       return this.$store.state.tab.isCollapse
     },
-    //动态获取路由
-    // asyncMenu() {
-    //   return this.$store.state.tab.menu
-    // }
+    asyncMenu() {
+      return this.$store.state.tab.menu
+    }
   }
 }
 

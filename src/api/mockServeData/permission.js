@@ -6,6 +6,7 @@ export default {
     // console.log(JSON.parse(config.body))
     // 先判断用户是否存在
     // 判断账号和密码是否对应
+    // url是页面文件的路径，没写全，在permission拼接
     if (username === 'admin' && password === 'admin') {
       return {
         code: 20000,
@@ -16,21 +17,21 @@ export default {
               name: 'home',
               label: '首页',
               icon: 's-home',
-              url: 'Home/Home'
+              url: 'HomePage.vue'
             },
             {
               path: '/mall',
               name: 'mall',
               label: '商品管理',
               icon: 'video-play',
-              url: 'MallManage/MallManage'
+              url: 'MallPage.vue'
             },
             {
               path: '/user',
               name: 'user',
               label: '用户管理',
               icon: 'user',
-              url: 'UserManage/UserManage'
+              url: 'UserPage.vue'
             },
             {
               label: '其他',
@@ -41,20 +42,20 @@ export default {
                   name: 'page1',
                   label: '页面1',
                   icon: 'setting',
-                  url: 'other/PageOne'
+                  url: 'PageOne.vue'
                 },
                 {
                   path: '/page2',
                   name: 'page2',
                   label: '页面2',
                   icon: 'setting',
-                  url: 'Other/PageTwo'
+                  url: 'PageTwo.vue'
                 }
               ]
             }
           ],
           token: Mock.Random.guid(),
-          message: '获取成功'
+          message: '欢迎您，管理员'
         }
       }
     } else if (username === 'xiaoxiao' && password === 'xiaoxiao') {
@@ -67,18 +68,18 @@ export default {
               name: 'home',
               label: '首页',
               icon: 's-home',
-              url: '@/components/HomePage.vue'
+              url: 'HomePage.vue'
             },
             {
               path: '/video',
               name: 'video',
               label: '商品管理',
               icon: 'video-play',
-              url: '@/components/MallPage.vue'
+              url: 'MallPage.vue'
             }
           ],
           token: Mock.Random.guid(),
-          message: '获取成功'
+          message: `欢迎您，用户`
         }
       }
     } else {
