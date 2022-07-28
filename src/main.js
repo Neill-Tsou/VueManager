@@ -53,9 +53,12 @@ router.beforeEach((to, from, next) => {
   if (!token && to.name !== 'login') {
     next({ name: 'login' })
   }
-  // else if (token && to.name === 'login') {
-  //   next({ name: 'home ' })
-  // }
+  else if (token && to.name === 'main') {
+    next({ name: 'home' })
+  }
+  else if (token && to.name === 'login') {
+    next({ name: 'home' })
+  }
   else {
     next()
   }
