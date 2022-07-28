@@ -16,14 +16,17 @@ const router = new VueRouter({
     routes: [
         {
             path: '/',
-            redirect: '/home',
+            // redirect: { name: 'home' },
             name: 'main',
             component: Main,
             children: [
                 // {
                 //     path: '/home',
                 //     name: 'home',
-                //     component: HomePage
+                //     component: HomePage,
+                //     meta: {
+                //         requireAuth: true
+                //     }
                 // },
                 // {
                 //     path: '/mall',
@@ -58,5 +61,7 @@ const router = new VueRouter({
 
     ]
 })
+
+
 
 export default router
